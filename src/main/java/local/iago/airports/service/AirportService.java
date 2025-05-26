@@ -5,6 +5,7 @@
 package local.iago.airports.service;
 
 import java.util.List;
+import local.iago.airports.DTO.AirportMinDTO;
 import local.iago.airports.entities.Airport;
 import local.iago.airports.repositories.AirportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,4 +35,13 @@ public class AirportService {
            
     }
      
+    public List<AirportMinDTO> findByCountry(String country) {
+        List<Airport> resultAirport = airportRepository.findByCountryIgnoreCase(country);
+        
+        List<AirportMinDTO> resultDTO = resultAirport.stream()
+                .map(x -> new AirportMinDTO(x)).toList();
+        
+        return resultDTO;
+    }
+       
 }

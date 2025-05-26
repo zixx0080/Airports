@@ -5,6 +5,7 @@
 package local.iago.airports.controllers;
 
 import java.util.List;
+import local.iago.airports.DTO.AirportMinDTO;
 import local.iago.airports.entities.Airport;
 import local.iago.airports.service.AirportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,20 +30,25 @@ public class AirportController {
         return result;
     }
       
-       @GetMapping("/city/{cityName}")
-       public ResponseEntity<List<Airport>> findByCityIgnoreCase(@PathVariable String cityName) {
-       List<Airport> result = airportService.findByCity(cityName);
+    @GetMapping("/city/{cityName}")
+       public List<Airport> findByCityIgnoreCase(@PathVariable String cityName) {
+          List<Airport> result = airportService.findByCity(cityName);
+          return result;
+    }
        
-       if (result.isEmpty()){
+    @GetMapping("/country/{countryName}")
+    public ResponseEntity<List<AirportMinDTO>> findByCountryIgnoreCase(@PathVariable String countryName) {
+           
+        List<AirportMinDTO> result = airportService.findByCountry(countryName);
+        if (result.isEmpty()){
            
            return ResponseEntity.notFound().build();
            
-       }else{
-       
-       return ResponseEntity.ok(result);
-       
+        }else{
+            
+       return ResponseEntity.ok(result);   
     }
-    
+        
   }
 }
 
